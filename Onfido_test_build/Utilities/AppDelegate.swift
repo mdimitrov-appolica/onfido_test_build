@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import Onfido
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
