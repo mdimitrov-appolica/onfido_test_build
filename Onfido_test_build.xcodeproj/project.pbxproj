@@ -13,7 +13,6 @@
 		D8934587220B0F65009C3F7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8934585220B0F65009C3F7B /* Main.storyboard */; };
 		D8934589220B0F67009C3F7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8934588220B0F67009C3F7B /* Assets.xcassets */; };
 		D893458C220B0F67009C3F7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D893458A220B0F67009C3F7B /* LaunchScreen.storyboard */; };
-		D8934595220B1B7D009C3F7B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8934594220B1B7D009C3F7B /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		D8934588220B0F67009C3F7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D893458B220B0F67009C3F7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D893458D220B0F67009C3F7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D8934594220B1B7D009C3F7B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +71,6 @@
 			isa = PBXGroup;
 			children = (
 				D8934593220B11E1009C3F7B /* Utilities */,
-				D8934596220B1B8A009C3F7B /* Models */,
 				D8934583220B0F65009C3F7B /* ViewController.swift */,
 				D8934585220B0F65009C3F7B /* Main.storyboard */,
 				D893458D220B0F67009C3F7B /* Info.plist */,
@@ -89,14 +86,6 @@
 				D893458A220B0F67009C3F7B /* LaunchScreen.storyboard */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		D8934596220B1B8A009C3F7B /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				D8934594220B1B7D009C3F7B /* User.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		F7E8D649C713072AC176FC4F /* Frameworks */ = {
@@ -232,7 +221,6 @@
 			files = (
 				D8934584220B0F65009C3F7B /* ViewController.swift in Sources */,
 				D8934582220B0F65009C3F7B /* AppDelegate.swift in Sources */,
-				D8934595220B1B7D009C3F7B /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

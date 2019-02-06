@@ -12,4 +12,11 @@ class User {
     var firstName: String = ""
     var lastName: String = ""
     var onfidoID: String = ""
+    var dateOfBirth: String = "1980-01-22"
+    var gender: String = ""
+    var country: String = "GBR"
+    var buildingNumber: String = "100"
+    var street: String = "Main Street"
+    var town: String = "London"
+    var postCode = "SW4 6EH"
 }
