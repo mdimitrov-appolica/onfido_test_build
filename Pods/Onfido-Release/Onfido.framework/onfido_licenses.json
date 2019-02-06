@@ -1,0 +1,34 @@
+{
+    "dependencies": [
+         {
+             "name": "Swinject",
+             "project_url": "https://github.com/Swinject/Swinject",
+             "license_name": "MIT",
+             "copyright_notice": "Copyright (c) 2015 Swinject Contributors",
+             "changed_source_code": false,
+             "source_code_changes": null
+         },
+         {
+             "name": "analytics-ios",
+             "project_url": "https://github.com/segmentio/analytics-ios",
+             "license_name": "MIT",
+             "copyright_notice": "Copyright (c) 2016 Segment.io, Inc.",
+             "changed_source_code": false,
+             "source_code_changes": null
+         },
+         {
+            "name": "MBProgressHUD",
+            "project_url": "https://github.com/matej/MBProgressHUD",
+            "license_name": "MIT",
+            "copyright_notice": "Copyright © 2009-2016 Matej Bukovinski",
+            "changed_source_code": true,
+            "source_code_changes": "renamed classes, variables and functions due to namespacing issues"
+         }
+    ],
+    "licenses": [
+         {
+             "name": "MIT",
+             "file": "onfido_licenses_mit.txt"
+         }
+    ]
+}

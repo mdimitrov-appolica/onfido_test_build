@@ -1,0 +1,24 @@
+PODS:
+  - Alamofire (4.7.3)
+  - Onfido (10.3.0)
+  - Onfido-Release (10.3.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.7.2)
+  - Onfido (~> 10.3.0)
+  - Onfido-Release (~> 10.3.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Onfido
+    - Onfido-Release
+
+SPEC CHECKSUMS:
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  Onfido: f1de8a258c53f099cd0a749ec350e615e5b39b1f
+  Onfido-Release: 3b78bcd19751464982900a27c664843836cc79c3
+
+PODFILE CHECKSUM: 6f779c7bb33f0a3ae38f63ae2dda0adbfb24642f
+
+COCOAPODS: 1.5.3

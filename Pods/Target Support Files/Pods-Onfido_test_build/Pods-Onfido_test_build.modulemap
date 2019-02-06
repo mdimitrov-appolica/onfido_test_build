@@ -1,0 +1,6 @@
+framework module Pods_Onfido_test_build {
+  umbrella header "Pods-Onfido_test_build-umbrella.h"
+
+  export *
+  module * { export * }
+}
