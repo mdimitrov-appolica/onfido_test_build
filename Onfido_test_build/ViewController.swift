@@ -13,7 +13,15 @@ enum ApplicantError: Error {
     case apiError([String:Any])
 }
 class ViewController: UIViewController {
+    //MARK: - Test Token String
     let apiToken = "test_fHiDLXGhsxEw8T-wu3KXzlqim4712Hu4"
+    
+    //MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    //MARK: - IBActions
     @IBAction func startOnfido(_ sender: UIButton) {
         self.createApplicant { (applicantID, error) in
             guard error == nil else {
@@ -24,11 +32,7 @@ class ViewController: UIViewController {
             self.runFlow(forApplicantWithID: applicantID!)
         }
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
+    //MARK: - Private Funcs
     private func showErrorMessage(forError error: Error) {
         let alert = UIAlertController(title: "Error", message: "Onfido SDK f'ed up", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "OK", style: .default, handler: { _ in })
@@ -57,6 +61,7 @@ class ViewController: UIViewController {
             .withApplicantId(applicantID)
             .withDocumentStep()
             .withFaceStep(ofVariant: .photo)
+            .withAppearance(self.setupAppearance())
             .build()
         
         let onfidoFlow = OnfidoFlow(withConfiguration: config)
@@ -69,9 +74,6 @@ class ViewController: UIViewController {
             self.present(onfidoRun, animated: true, completion: nil)
             
         } catch let error {
-            
-            // cannot execute the flow
-            // check CameraPermissions
             self.showErrorMessage(forError: error)
         }
     }
@@ -107,6 +109,16 @@ class ViewController: UIViewController {
                 completionHandler(applicantId, nil)
         }
     }
-
+    private func setupAppearance() -> Appearance {
+        let appearance = Appearance(
+            primaryColor: UIColor(red: 0.09019607843, green: 0.1450980392, blue: 0.2588235294, alpha: 1.0),
+            primaryTitleColor: UIColor(red: 0.3803921569, green: 0.4509803922, blue: 0.8558823529, alpha: 1.0),
+            primaryBackgroundPressedColor: UIColor(red: 0.862745098, green: 0.862745098, blue: 0.862745098, alpha: 1.0),
+            secondaryBackgroundPressedColor: UIColor(red: 0.5019607843, green: 0.9490196078, blue: 1, alpha: 1.0),
+            fontRegular: "ArialHebrew",
+            fontBold: "ArialHebrew-Bold")
+        
+        return appearance
+    }
 }
 
