@@ -14,7 +14,7 @@ enum ApplicantError: Error {
 }
 class ViewController: UIViewController {
     //MARK: - Test Token String
-    let apiToken = "test_fHiDLXGhsxEw8T-wu3KXzlqim4712Hu4"
+    var applicantID = ""
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -28,13 +28,14 @@ class ViewController: UIViewController {
                 self.showErrorMessage(forError: error!)
                 return
             }
-            
-            self.runFlow(forApplicantWithID: applicantID!)
+            if let applicantID = applicantID {
+                self.runFlow(forApplicantWithID: applicantID)
+            }
         }
     }
     //MARK: - Private Funcs
     private func showErrorMessage(forError error: Error) {
-        let alert = UIAlertController(title: "Error", message: "Onfido SDK f'ed up", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Error", message: "Onfido SDK didn't work \(error)", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "OK", style: .default, handler: { _ in })
         alert.addAction(alertAction)
         self.present(alert, animated: true)
@@ -44,6 +45,13 @@ class ViewController: UIViewController {
             if case let OnfidoResponse.error(innerError) = response {
                 self.showErrorMessage(forError: innerError)
             } else if case OnfidoResponse.success = response {
+                self.sendCheck(forResponse: response) { (checkId, error) in
+                    guard error == nil else {
+                        self.showErrorMessage(forError: error!)
+                        return
+                    }
+                    print(checkId!)
+                }
                 let alert = UIAlertController(title: "Success", message: "Success", preferredStyle: .alert)
                 let alertAction = UIAlertAction(title: "OK", style: .default, handler: { _ in })
                 alert.addAction(alertAction)
@@ -57,7 +65,7 @@ class ViewController: UIViewController {
         }
         
         let config = try! OnfidoConfig.builder()
-            .withToken(apiToken)
+            .withToken(Constants.apiToken)
             .withApplicantId(applicantID)
             .withDocumentStep()
             .withFaceStep(ofVariant: .photo)
@@ -79,21 +87,11 @@ class ViewController: UIViewController {
     }
 
     private func createApplicant(_ completionHandler: @escaping(String?, Error?) -> Void) {
-        let applicant: Parameters = [
-            "first_name": "Theresa",
-            "last_name": "May"
-        ]
-        
-        let headers: HTTPHeaders = [
-            "Authorization": "Token token=\(apiToken)",
-            "Accept": "application/json"
-        ]
-        
         Alamofire.request("https://api.onfido.com/v2/applicants",
             method: .post,
-            parameters: applicant,
+            parameters: Constants.applicant,
             encoding: JSONEncoding.default,
-            headers: headers).responseJSON { (response: DataResponse<Any>) in
+            headers: Constants.headers).responseJSON { (response: DataResponse<Any>) in
                 guard response.error == nil else {
                     completionHandler(nil, response.error)
                     return
@@ -106,9 +104,39 @@ class ViewController: UIViewController {
                 }
                 
                 let applicantId = response["id"] as! String
+                print(applicantId)
+                self.applicantID = applicantId
                 completionHandler(applicantId, nil)
         }
     }
+    
+    private func sendCheck(forResponse response: OnfidoResponse, _ completionHandler: @escaping(String?, Error?) -> Void) {
+        
+        let checkRequestURL = "https://api.onfido.com/v2/applicants/" + applicantID + "/checks?" + Constants.checkType +  Constants.reportName1 + Constants.reportName2  + Constants.reportvariant
+        
+        Alamofire.request(checkRequestURL,
+                          method: .post,
+                          parameters: [:],
+                          encoding: JSONEncoding.default,
+                          headers: Constants.headers).responseJSON { (response: DataResponse<Any>) in
+                            guard response.error == nil else {
+                                completionHandler(nil, response.error)
+                                return
+                            }
+                            let response = response.result.value as! [String: Any]
+
+                            guard response.keys.contains("error") == false else {
+                                print(response["error"] as! [String: Any])
+                                completionHandler(nil, ApplicantError.apiError(response["error"] as! [String : Any]))
+                                return
+                            }
+                            
+                            let checkId = response["id"] as! String
+                            
+                            completionHandler(checkId, nil)
+        }
+    }
+    
     private func setupAppearance() -> Appearance {
         let appearance = Appearance(
             primaryColor: UIColor(red: 0.09019607843, green: 0.1450980392, blue: 0.2588235294, alpha: 1.0),
@@ -122,3 +150,21 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController {
+    struct Constants {
+        static let apiToken: String = "test_fHiDLXGhsxEw8T-wu3KXzlqim4712Hu4"
+        static let headers: HTTPHeaders = [
+            "Authorization": "Token token=\(apiToken)",
+            "Accept": "application/json"
+        ]
+        static let applicant: Parameters = [
+            "first_name": "Martin",
+            "last_name": "Dimitrov",
+            "country": "BGR"
+        ]
+        static let checkType = "type=express"
+        static let reportName1 = "&reports[][name]=document"
+        static let reportName2 = "&reports[][name]=facial_similarity"
+        static let reportvariant = "&reports[][variant]=express"
+    }
+}
